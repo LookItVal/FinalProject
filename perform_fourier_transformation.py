@@ -99,6 +99,7 @@ def main():
             hours, rem = divmod(estimated_time_remaining, 3600)
             minutes, seconds = divmod(rem, 60)
             time_remaining_str = f'{int(hours):02}:{int(minutes):02}:{int(seconds):02}'
+            print(f'Row {completed_rows}/{len(df)}')
             print(f'Estimated time remaining: {time_remaining_str}')
             print(f'{percent_complete:.2%} complete')
             print('---')
