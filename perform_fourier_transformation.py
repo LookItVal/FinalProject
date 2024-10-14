@@ -49,7 +49,7 @@ def process_row(row):
         sound = AudioSegment.from_file(f"Data/birdsong-recognition/train_audio/{row['ebird_code']}/{row['filename']}", format="mp3")
     except:
         print(f'Error reading: {row.ebird_code}/{row.filename}')
-        return row
+        return index, row
     frequencies, fourier = fourier_transform(sound)
     log_bins, log_rms_spectrum = group_frequencies_rms(frequencies, fourier)
     for j, bin_value in enumerate(log_bins[:-1]):
