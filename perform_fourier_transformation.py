@@ -30,7 +30,7 @@ def fourier_transform(sound):
 
 # Function to group frequencies and calculate the RMS value for each group
 # Returns the log bins and the RMS values for each group
-def group_frequencies_rms(frequencies, fourier, min_freq=20, max_freq=22462, num_bins=122):
+def group_frequencies_rms(frequencies, fourier, min_freq=20, max_freq=21195, num_bins=121):
     log_bins = np.logspace(np.log10(min_freq), np.log10(max_freq), num=num_bins)
     bin_indices = np.digitize(frequencies, log_bins) - 1  # Get bin indices for each frequency
     log_rms_spectrum = np.zeros(num_bins - 1)
@@ -38,7 +38,7 @@ def group_frequencies_rms(frequencies, fourier, min_freq=20, max_freq=22462, num
         bin_values = fourier[bin_indices == i]
         if bin_values.size > 0:
             log_rms_spectrum[i] = np.sqrt(np.mean(np.abs(bin_values)**2))
-    return log_bins[:-3], log_rms_spectrum[:-2]
+    return log_bins[:-1], log_rms_spectrum
 
 # Function that performs a foyer transformation for each audio file referenced in the dataframe
 # Takes a single row of the dataframe as input and returns the row with the Fourier Transform values added
@@ -52,7 +52,7 @@ def process_row(row):
         return index, row
     frequencies, fourier = fourier_transform(sound)
     log_bins, log_rms_spectrum = group_frequencies_rms(frequencies, fourier)
-    for j, bin_value in enumerate(log_bins[:-1]):
+    for j, bin_value in enumerate(log_bins):
         column_name = f"{bin_value:.0f}Hz"
         setattr(row, column_name, log_rms_spectrum[j])
     del sound, frequencies, fourier, log_bins, log_rms_spectrum
@@ -81,8 +81,8 @@ def main():
     for bin_value in log_bins:
         column_name = f"{bin_value:.0f}Hz"
         df[column_name] = np.nan  # Initialize with NaN or any default value
-        df = df.copy()  # Force pandas to allocate memory for the new column
-    
+        df = df.copy()  # Force pandas to allocate memory for the new columns
+
     print('-------------------BEGINING PROCESSING-------------------')
     start_time = time.time()
     completed_rows = 0  # Counter for completed rows
@@ -103,7 +103,7 @@ def main():
             print(f'{percent_complete:.3%} Complete - Estimated time remaining: {time_remaining_str}', end='\r')
 
     #memory_usage('Data after filling Frequency Bins', df)
-    df.to_csv('processed_birdsong_data.csv', index=False)
+    df.to_csv('exports/processed_birdsong_data.csv', index=False)
     print('-------------------PROCESSING COMPLETE-------------------')
 
 
