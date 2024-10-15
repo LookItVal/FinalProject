@@ -38,7 +38,7 @@ def group_frequencies_rms(frequencies, fourier, min_freq=20, max_freq=22462, num
         bin_values = fourier[bin_indices == i]
         if bin_values.size > 0:
             log_rms_spectrum[i] = np.sqrt(np.mean(np.abs(bin_values)**2))
-    return log_bins[:-1], log_rms_spectrum
+    return log_bins[:-3], log_rms_spectrum[:-2]
 
 # Function that performs a foyer transformation for each audio file referenced in the dataframe
 # Takes a single row of the dataframe as input and returns the row with the Fourier Transform values added
@@ -83,6 +83,7 @@ def main():
         df[column_name] = np.nan  # Initialize with NaN or any default value
         df = df.copy()  # Force pandas to allocate memory for the new column
     
+    print('-------------------BEGINING PROCESSING-------------------')
     start_time = time.time()
     completed_rows = 0  # Counter for completed rows
     # Use ProcessPoolExecutor to parallelize the process
@@ -90,7 +91,6 @@ def main():
         for future in executor.map(process_row, df.iterrows()):
             index, row = future[0], future[1]
             df.loc[index] = row
-
             # Calculate and print progress
             completed_rows += 1
             percent_complete = completed_rows / len(df)
@@ -100,12 +100,7 @@ def main():
             hours, rem = divmod(estimated_time_remaining, 3600)
             minutes, seconds = divmod(rem, 60)
             time_remaining_str = f'{int(hours):02}:{int(minutes):02}:{int(seconds):02}'
-            print(f'''
--------------------BEGINING PROCESSING-------------------
-Row {completed_rows}/{len(df)}
-Estimated time remaining: {time_remaining_str}
-{percent_complete:.2%} complete
-                  ''', end='\r')
+            print(f'{percent_complete:.3%} Complete - Estimated time remaining: {time_remaining_str}', end='\r')
 
     #memory_usage('Data after filling Frequency Bins', df)
     df.to_csv('processed_birdsong_data.csv', index=False)
