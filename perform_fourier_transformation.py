@@ -102,10 +102,12 @@ def main():
             hours, rem = divmod(estimated_time_remaining, 3600)
             minutes, seconds = divmod(rem, 60)
             time_remaining_str = f'{int(hours):02}:{int(minutes):02}:{int(seconds):02}'
-            print(f'Row {completed_rows}/{len(df)}')
-            print(f'Estimated time remaining: {time_remaining_str}')
-            print(f'{percent_complete:.2%} complete')
-            print('---')
+            print(f'''
+---\n
+Row {completed_rows}/{len(df)}\n
+Estimated time remaining: {time_remaining_str}\n
+{percent_complete:.2%} complete
+                  ''', end='\r')
 
     #memory_usage('Data after filling Frequency Bins', df)
     df.to_csv('processed_birdsong_data.csv', index=False)
