@@ -87,7 +87,7 @@ def main():
     start_time = time.time()
     completed_rows = 0  # Counter for completed rows
     # Use ProcessPoolExecutor to parallelize the process
-    with ProcessPoolExecutor(max_workers=4) as executor:
+    with ProcessPoolExecutor(max_workers=3) as executor:
         for future in executor.map(process_row, df.iterrows()):
             index, row = future[0], future[1]
             df.loc[index] = row
