@@ -83,8 +83,6 @@ def main():
         df[column_name] = np.nan  # Initialize with NaN or any default value
         df = df.copy()  # Force pandas to allocate memory for the new column
     
-    print('-------------------BEGINING PROCESSING-------------------')
-
     start_time = time.time()
     completed_rows = 0  # Counter for completed rows
     # Use ProcessPoolExecutor to parallelize the process
@@ -103,9 +101,9 @@ def main():
             minutes, seconds = divmod(rem, 60)
             time_remaining_str = f'{int(hours):02}:{int(minutes):02}:{int(seconds):02}'
             print(f'''
----\n
-Row {completed_rows}/{len(df)}\n
-Estimated time remaining: {time_remaining_str}\n
+-------------------BEGINING PROCESSING-------------------
+Row {completed_rows}/{len(df)}
+Estimated time remaining: {time_remaining_str}
 {percent_complete:.2%} complete
                   ''', end='\r')
 
