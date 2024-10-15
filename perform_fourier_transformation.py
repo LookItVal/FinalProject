@@ -43,10 +43,9 @@ def group_frequencies_rms(frequencies, fourier, min_freq=20, max_freq=20000, num
 # Function that performs a foyer transformation for each audio file referenced in the dataframe
 # Takes a single row of the dataframe as input and returns the row with the Fourier Transform values added
 def process_row(row):
-    row_start_time = time.time()
     index, row = row[0], row[1]
     try:
-        sound = AudioSegment.from_file(f"Data/birdsong-recognition/train_audio/{row['ebird_code']}/{row['filename']}", format="mp3")
+        sound = AudioSegment.from_file(f"data/birdsong-recognition/train_audio/{row['ebird_code']}/{row['filename']}", format="mp3")
     except:
         print(f'Error reading: {row.ebird_code}/{row.filename}')
         return index, row
@@ -60,8 +59,8 @@ def process_row(row):
 
 def main():
     # Read and Preprocess the data
-    df = pd.read_csv('Data/birdsong-recognition/train.csv')
-    taxonomy = pd.read_csv('Data/ebird_taxonomy_v2023.csv')
+    df = pd.read_csv('data/birdsong-recognition/train.csv')
+    taxonomy = pd.read_csv('data/ebird_taxonomy_v2023.csv')
     df = df.merge(taxonomy, left_on='ebird_code', right_on='SPECIES_CODE', how='left', indicator=True)
     df = df.drop(columns=['_merge', 'playback_used', 'pitch', 'duration', 'speed',
                         'species', 'number_of_notes', 'title', 'secondary_labels',
