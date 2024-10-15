@@ -30,7 +30,7 @@ def fourier_transform(sound):
 
 # Function to group frequencies and calculate the RMS value for each group
 # Returns the log bins and the RMS values for each group
-def group_frequencies_rms(frequencies, fourier, min_freq=20, max_freq=20000, num_bins=120):
+def group_frequencies_rms(frequencies, fourier, min_freq=20, max_freq=22462, num_bins=122):
     log_bins = np.logspace(np.log10(min_freq), np.log10(max_freq), num=num_bins)
     bin_indices = np.digitize(frequencies, log_bins) - 1  # Get bin indices for each frequency
     log_rms_spectrum = np.zeros(num_bins - 1)
@@ -47,6 +47,7 @@ def process_row(row):
     try:
         sound = AudioSegment.from_file(f"data/birdsong-recognition/train_audio/{row['ebird_code']}/{row['filename']}", format="mp3")
     except:
+        del sound
         print(f'Error reading: {row.ebird_code}/{row.filename}')
         return index, row
     frequencies, fourier = fourier_transform(sound)
@@ -54,6 +55,7 @@ def process_row(row):
     for j, bin_value in enumerate(log_bins[:-1]):
         column_name = f"{bin_value:.0f}Hz"
         setattr(row, column_name, log_rms_spectrum[j])
+    del sound, frequencies, fourier, log_bins, log_rms_spectrum
     return index, row
 
 
@@ -86,7 +88,7 @@ def main():
     start_time = time.time()
     completed_rows = 0  # Counter for completed rows
     # Use ProcessPoolExecutor to parallelize the process
-    with ProcessPoolExecutor(max_workers=2) as executor:
+    with ProcessPoolExecutor(max_workers=4) as executor:
         for future in executor.map(process_row, df.iterrows()):
             index, row = future[0], future[1]
             df.loc[index] = row
