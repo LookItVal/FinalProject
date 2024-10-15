@@ -91,6 +91,8 @@ def main():
         for future in executor.map(process_row, df.iterrows()):
             index, row = future[0], future[1]
             df.loc[index] = row
+
+            # Calculate and print progress
             completed_rows += 1
             percent_complete = completed_rows / len(df)
             elapsed_time = time.time() - start_time
