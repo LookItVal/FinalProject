@@ -47,7 +47,6 @@ def process_row(row):
     try:
         sound = AudioSegment.from_file(f"data/birdsong-recognition/train_audio/{row['ebird_code']}/{row['filename']}", format="mp3")
     except:
-        del sound
         print(f'Error reading: {row.ebird_code}/{row.filename}')
         return index, row
     frequencies, fourier = fourier_transform(sound)
