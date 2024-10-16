@@ -4,6 +4,10 @@ import numpy as np
 from pydub import AudioSegment
 from concurrent.futures import ProcessPoolExecutor
 
+MIN_FREQ = 20
+MAX_FREQ = 21195
+NUM_BINS = 121
+
 # Function to print memory usage of a dataframe in a human readable format
 def memory_usage(name, df):
     memory = df.memory_usage(deep=True).sum()
@@ -30,7 +34,7 @@ def fourier_transform(sound):
 
 # Function to group frequencies and calculate the RMS value for each group
 # Returns the log bins and the RMS values for each group
-def group_frequencies_rms(frequencies, fourier, min_freq=20, max_freq=21195, num_bins=121):
+def group_frequencies_rms(frequencies, fourier, min_freq=MIN_FREQ, max_freq=MAX_FREQ, num_bins=NUM_BINS):
     log_bins = np.logspace(np.log10(min_freq), np.log10(max_freq), num=num_bins)
     bin_indices = np.digitize(frequencies, log_bins) - 1  # Get bin indices for each frequency
     log_rms_spectrum = np.zeros(num_bins - 1)
@@ -75,7 +79,7 @@ def main():
                     'ORDER': 'order', 
                     'FAMILY': 'family', 
                     'SPECIES_GROUP': 'species_group'}, inplace=True)
-    log_bins = np.logspace(np.log10(20), np.log10(20000), num=120)
+    log_bins = np.logspace(np.log10(MIN_FREQ), np.log10(MAX_FREQ), num=NUM_BINS)
     # Add columns to the dataframe for each element in log_bins
     for bin_value in log_bins:
         column_name = f"{bin_value:.0f}Hz"
