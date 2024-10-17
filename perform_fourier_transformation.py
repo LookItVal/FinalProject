@@ -8,6 +8,28 @@ MIN_FREQ = 20
 MAX_FREQ = 21195
 NUM_BINS = 121
 
+# Function to print a progress bar that updates in place
+def print_progress_bar(iteration, length, message=''):
+    progress = iteration / length
+    progress = int(progress * 100)
+    # Determine color based on progress
+    if progress < 25:
+        color = '\033[91m'  # Red
+    elif progress < 90:
+        color = '\033[93m'  # Yellow
+    else:
+        color = '\033[92m'  # Green
+    bar = color + '=' * progress + '\033[0m' + ' ' * (100 - progress)
+    print('\033[?25l', end='')  # Hide cursor
+    print(f'\r[{bar}] - {iteration}/{length}', end='')
+    if message:
+        print(f' - {message}', end='')
+    if progress == length:
+        print()
+        print('\033[?25h', end='')  # Show cursor
+    else:
+        print('\033[?25h', end='')  # Show cursor after each update
+
 # Function to print memory usage of a dataframe in a human readable format
 def memory_usage(name, df):
     memory = df.memory_usage(deep=True).sum()
@@ -51,7 +73,7 @@ def process_row(row):
     try:
         sound = AudioSegment.from_file(f"data/birdsong-recognition/train_audio/{row['ebird_code']}/{row['filename']}", format="mp3")
     except:
-        print(f'Error reading: {row.ebird_code}/{row.filename}', end='\033[K\n')
+        print(f'\rError reading: {row.ebird_code}/{row.filename}', end='\033[K\n')
         return index, row
     frequencies, fourier = fourier_transform(sound)
     log_bins, log_rms_spectrum = group_frequencies_rms(frequencies, fourier)
@@ -86,7 +108,7 @@ def main():
         df[column_name] = np.nan  # Initialize with NaN or any default value
         df = df.copy()  # Force pandas to allocate memory for the new columns
 
-    print('-------------------BEGINING PROCESSING-------------------')
+    print('-----------------------------------------------------------------BEGINING PROCESSING-----------------------------------------------------------------')
     start_time = time.time()
     completed_rows = 0  # Counter for completed rows
     # Use ProcessPoolExecutor to parallelize the process
@@ -103,11 +125,11 @@ def main():
             hours, rem = divmod(estimated_time_remaining, 3600)
             minutes, seconds = divmod(rem, 60)
             time_remaining_str = f'{int(hours):02}:{int(minutes):02}:{int(seconds):02}'
-            print(f'-{percent_complete:.3%} Complete - Estimated time remaining: {time_remaining_str}', end='\r')
+            print_progress_bar(completed_rows, len(df), message=f'Estimated Time Remaining: {time_remaining_str}')
 
     #memory_usage('Data after filling Frequency Bins', df)
     df.to_csv('exports/processed_birdsong_data.csv', index=False)
-    print('-------------------PROCESSING COMPLETE-------------------')
+    print('-----------------------------------------------------------------PROCESSING COMPLETE------------------------------------------------------------------')
 
 
 if __name__ == '__main__':
