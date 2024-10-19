@@ -23,7 +23,7 @@ def print_progress_bar(iteration, length, message=''):
     print('\033[?25l', end='')  # Hide cursor
     print(f'\r[{bar}] - {iteration}/{length}', end='')
     if message:
-        print(f' - {message}', end='')
+        print(f' - {message}', end='\033[K')
     if progress == length:
         print()
         print('\033[?25h', end='')  # Show cursor
