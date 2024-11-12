@@ -1,0 +1,51 @@
+                                                   precision    recall  f1-score   support
+
+                                       Blackbirds       0.21      0.23      0.22       270
+                 Cardinals, Grosbeaks, and Allies       0.27      0.12      0.16       234
+            Catbirds, Mockingbirds, and Thrashers       0.39      0.26      0.31       101
+                          Cormorants and Anhingas       0.00      0.00      0.00         6
+                                          Cuckoos       0.17      0.02      0.04        41
+                            Falcons and Caracaras       0.21      0.06      0.09        54
+                   Finches, Euphonias, and Allies       0.35      0.32      0.34       300
+                                     Gnatcatchers       0.00      0.00      0.00        35
+                                           Grebes       0.00      0.00      0.00        61
+                        Grouse, Quail, and Allies       0.19      0.10      0.13        42
+                       Gulls, Terns, and Skimmers       0.38      0.31      0.34       138
+                         Herons, Ibis, and Allies       0.30      0.23      0.26       124
+                                     Hummingbirds       0.33      0.45      0.38        88
+                 Jays, Magpies, Crows, and Ravens       0.31      0.54      0.39       222
+                                      Kingfishers       0.00      0.00      0.00        19
+                                         Kinglets       0.40      0.13      0.20        46
+                                            Larks       0.62      0.42      0.50        24
+                     Long-tailed Tits and Bushtit       0.53      0.43      0.48        23
+                      Longspurs and Snow Buntings       0.30      0.12      0.17        26
+                                            Loons       0.20      0.08      0.11        25
+                             Martins and Swallows       0.50      0.32      0.39       127
+                               New World Sparrows       0.32      0.41      0.36       499
+                                        Nightjars       0.11      0.04      0.05        28
+                                       Nuthatches       0.22      0.07      0.11        84
+                               Old World Sparrows       0.61      0.47      0.54        40
+                                             Owls       0.33      0.23      0.27        80
+                                Pigeons and Doves       0.56      0.52      0.54        86
+                    Rails, Gallinules, and Allies       0.00      0.00      0.00        44
+                                       Shorebirds       0.34      0.47      0.40       298
+                                          Shrikes       0.00      0.00      0.00        30
+                                Silky-flycatchers       0.33      0.11      0.17         9
+                              Starlings and Mynas       0.75      0.19      0.30        16
+                                           Swifts       0.00      0.00      0.00        20
+                                         Thrushes       0.27      0.18      0.22       196
+                    Tits, Chickadees, and Titmice       0.41      0.23      0.29        93
+                                     Treecreepers       0.43      0.10      0.16        31
+Tyrant Flycatchers: Pewees, Kingbirds, and Allies       0.25      0.30      0.28       440
+                                           Vireos       0.31      0.44      0.36       160
+                      Vultures, Hawks, and Allies       0.18      0.04      0.07       164
+                              Wagtails and Pipits       0.94      0.45      0.61        33
+                                        Waterfowl       0.50      0.68      0.57       329
+                                         Waxwings       0.41      0.39      0.40        18
+                                    Wood-Warblers       0.44      0.72      0.55       653
+                                      Woodpeckers       0.12      0.11      0.11       198
+                                            Wrens       0.18      0.13      0.15       209
+
+                                         accuracy                           0.35      5764
+                                        macro avg       0.30      0.23      0.24      5764
+                                     weighted avg       0.32      0.35      0.32      5764
