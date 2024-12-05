@@ -1,0 +1,6 @@
+Decision Tree 5 Cross Validation Score: 20.10% ± 0.77%
+Decision Tree 10 Cross Validation Score: 27.51% ± 0.91%
+Decision Tree 25 Cross Validation Score: 42.89% ± 0.43%
+Decision Tree 50 Cross Validation Score: 44.01% ± 0.32%
+Decision Tree 100 Cross Validation Score: 44.23% ± 0.56%
+Decision Tree 250 Cross Validation Score: 43.91% ± 0.33%

@@ -1,3 +1,5 @@
 .*
 !.gitignore
 data/birdsong-recognition/
+
+exports/filtered_data/
