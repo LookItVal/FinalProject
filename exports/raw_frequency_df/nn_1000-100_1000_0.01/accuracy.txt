@@ -1,1 +1,1 @@
-Ovearll Accuracy: 68.48%
+Ovearll Accuracy: 67.44%
