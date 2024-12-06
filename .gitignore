@@ -3,3 +3,4 @@
 data/birdsong-recognition/
 
 exports/filtered_data/
+exports/filtered_data.csv
