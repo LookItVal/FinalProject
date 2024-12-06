@@ -2,5 +2,5 @@
 !.gitignore
 data/birdsong-recognition/
 
-exports/filtered_data/
 exports/filtered_df.csv
+exports/filtered_data/
